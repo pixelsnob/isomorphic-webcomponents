@@ -7,6 +7,7 @@ import path from 'path';
 import fs from 'fs';
 import express from 'express';
 import jsdom from 'jsdom';
+import getWindow from 'lib/server_dom';
 
 const port = config.port || 3004,
       app  = express(),
@@ -15,35 +16,21 @@ const port = config.port || 3004,
 app.set('view engine', 'pug');
 app.set('view cache', (env == 'production'));
 
-let jsdom_src = [
-  'public/dist/client.js'
-].map(script => fs.readFileSync(path.resolve(script), 'utf8'));
+if (env == 'development') {
+  app.use(express.static('public'));
+}
 
-let base_window;
+const promised_window = getWindow();
 
-jsdom.env({
-  html: '<p>Custom tag: <test-tag test="222">custom</test-tag></p>',
-  src: jsdom_src,
-  virtualConsole: jsdom.createVirtualConsole().sendTo(console),
-  done: (err, window) => {
-    if (err) {
-      console.error('Error: jsdom startup', err);
-      process.exit(1);
+app.route('/*').get((req, res, next) => {
+  promised_window.then(window => {
+    let oh = window.document.querySelector('em');
+    if (oh) {
+      oh.style = 'border: 1px solid red;';
     }
-    let { HTMLElement, document } = window;
-    let client_js = document.createElement('script');
-    client_js.src = '/dist/client.js';
-    document.querySelector('head').appendChild(client_js);
-    base_window = window;
-  }
-});
-
-app.route('/test').get((req, res, next) => {
-  let oh = base_window.document.querySelector('em');
-  if (oh) {
-    oh.style = 'border: 1px solid red;';
-  }
-  res.send(base_window.document.documentElement.outerHTML);
+    window.document.body.innerHTML = '<p>Custom tag: <test-tag test="222">custom</test-tag></p>';
+    res.send(window.document.documentElement.outerHTML);
+  }).catch(next);
 });
 
 app.listen(port);
