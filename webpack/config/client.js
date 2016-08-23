@@ -39,11 +39,9 @@ module.exports = {
     new ExtractTextPlugin('main.css'),
     new webpack.optimize.UglifyJsPlugin({
       compress: { warnings: false }
-    })/*,
+    }),
     new webpack.ProvidePlugin({
-      Backbone:       'backbone'
-    })*/
-    //new webpack.HotModuleReplacementPlugin()
+    })
   ],
   module : {
     loaders: [

@@ -16,14 +16,13 @@ app.set('view engine', 'pug');
 app.set('view cache', (env == 'production'));
 
 let jsdom_src = [
-  'node_modules/webcomponents.js/webcomponents-lite.js',
-  'shared/components.js' // <<< make this point to another webpack file?
+  'public/dist/client.js'
 ].map(script => fs.readFileSync(path.resolve(script), 'utf8'));
 
 let base_window;
 
 jsdom.env({
-  html: '<test-tag test="222">custom</test-tag>',
+  html: '<p>Custom tag: <test-tag test="222">custom</test-tag></p>',
   src: jsdom_src,
   virtualConsole: jsdom.createVirtualConsole().sendTo(console),
   done: (err, window) => {
@@ -31,16 +30,19 @@ jsdom.env({
       console.error('Error: jsdom startup', err);
       process.exit(1);
     }
-    let { document, location } = window;
-    document.registerElement('test-tag', window.TestTag);
+    let { HTMLElement, document } = window;
+    let client_js = document.createElement('script');
+    client_js.src = '/dist/client.js';
+    document.querySelector('head').appendChild(client_js);
     base_window = window;
-    console.log(window.TestTag);
   }
 });
 
 app.route('/test').get((req, res, next) => {
   let oh = base_window.document.querySelector('em');
-  oh.style = 'border: 1px solid red;';
+  if (oh) {
+    oh.style = 'border: 1px solid red;';
+  }
   res.send(base_window.document.documentElement.outerHTML);
 });
 
