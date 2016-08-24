@@ -25,8 +25,8 @@ module.exports = {
   resolve: {
     extensions: [ '', '.js' ],
     root: [
+      path.join(app_dir, 'server'),
       path.join(app_dir, 'shared'),
-      path.join(app_dir, 'public/js'),
       path.join(app_dir, 'node_modules')
     ],
     alias: {
