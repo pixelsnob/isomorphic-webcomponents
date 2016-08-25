@@ -15,14 +15,13 @@ let jsdom_src = [
 ].map(script => fs.readFileSync(path.resolve(script), 'utf8'));
 
 export default (file_path, opts, cb) => {
-	fs.readFile(file_path, 'utf8', (err, html) => {
+  fs.readFile(file_path, 'utf8', (err, html) => {
     if (err) {
       return cb(err);
     }
     getDomWindow(html, jsdom_src).then(window => {
       cb(null, window.document.documentElement.outerHTML);
     }).catch(cb);
-	});
+  });
 };
-
 
