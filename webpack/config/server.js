@@ -32,8 +32,7 @@ module.exports = {
     alias: {
       template:                  'lib/template',
       vex_dialog:                'vex-js/js/vex.dialog',
-      markdown:                  'marked',
-      webcomponents:             'webcomponents.js/webcomponents'  
+      markdown:                  'marked'
     }
   },
   module: {
