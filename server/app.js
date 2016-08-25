@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  console.error(err);
   res.format({
     html: () => {
       res.render('error', { error: err.message });

@@ -1,31 +1,31 @@
 /**
  * Returns a Promise with access to a jsdom window object, with
- * optional html and js src
+ * optional html, JS src that has immedate access to the window object,
+ * and client script tags
  * 
  */
 import jsdom from 'jsdom';
 
-export default (html, src) => {
+export default (html = '', src_scripts = [], client_scripts = []) => {
   return new Promise((resolve, reject) => {
     jsdom.env({
       html,
-      src,
+      src: src_scripts,
+      // Pass window's console() calls up to app
       virtualConsole: jsdom.createVirtualConsole().sendTo(console),
       done: (err, window) => {
         if (err) {
-          reject(err);
+          reject(new Error(err));
         }
-        // Add client scripts that will point to these on the client
-        let client_js = window.document.createElement('script');
-        client_js.src = '/dist/client.js';
-        window.document.querySelector('head').appendChild(client_js);
-        // Pass any window errors up to virtual console
-        window.addEventListener('error', (err) => { // <<-- does this actually work?
-          console.log(err);
+        let { document } = window;
+        // Attach client scripts
+        let $head = document.querySelector('head');
+        client_scripts.map(script => {
+          let $script = document.createElement('script');
+          $script.src = script;
+          $head.appendChild($script);
         });
-        window.addEventListener('WebComponentsReady', function(e) {
-          resolve(window);
-        });
+        resolve(window);
       }
     });
   });
