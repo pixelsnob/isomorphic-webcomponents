@@ -24,6 +24,23 @@ app.route('/test').get((req, res, next) => {
   res.render('test');
 });
 
+app.use((req, res, next) => {
+  res.status(404).send('404');//.render('not_found');
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.format({
+    html: () => {
+      res.render('error', { error: err.message });
+    },
+    json: () => {
+      res.status(500);
+      res.json({ ok: 0 });
+    }
+  });
+});
+
 app.listen(port);
 console.log('Listening on port ' + port);
 
