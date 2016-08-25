@@ -7,7 +7,6 @@
  */
 import path from 'path';
 import fs from 'fs';
-import jsdom from 'jsdom';
 import getDomWindow from 'lib/get_dom_window';
 
 let jsdom_src = [
