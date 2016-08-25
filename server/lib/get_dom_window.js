@@ -6,7 +6,7 @@
 import jsdom from 'jsdom';
 
 export default (html, src) => {
-  let promised_window = new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     jsdom.env({
       html,
       src,
@@ -26,6 +26,5 @@ export default (html, src) => {
       }
     });
   });
-  return promised_window;
 };
 
