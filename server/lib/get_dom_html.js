@@ -1,7 +1,7 @@
 /**
- * Returns a Promise with access to a jsdom window object, with
- * optional html, JS src that has immedate access to the window object,
- * and client script tags
+ * Returns a promise which, when resolved, returns full html document
+ * with optional html content, js src, and script tags
+ * 
  * 
  */
 import jsdom from 'jsdom';
@@ -19,11 +19,11 @@ export default (html = '', src_scripts = [], client_scripts = []) => {
         }
         let { document } = window;
         // Attach client scripts
-        let $head = document.querySelector('head');
+        let head_el = document.querySelector('head');
         client_scripts.map(script => {
-          let $script = document.createElement('script');
-          $script.src = script;
-          $head.appendChild($script);
+          let script_el = document.createElement('script');
+          script_el.src = script;
+          head_el.appendChild(script_el);
         });
         resolve(window.document.documentElement.outerHTML);
       }
