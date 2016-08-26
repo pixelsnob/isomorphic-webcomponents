@@ -1,8 +1,9 @@
 
-import webcomponents from 'webcomponents.js/dist/webcomponents-lite';
+import mutation_observer from 'webcomponents.js/dist/MutationObserver';
 import custom_elements from 'webcomponents.js/dist/CustomElementsV1.min';
 
 import TestTag from 'components/test_tag';
 
-window.document.registerElement('test-tag', TestTag);
+window.customElements.define('test-tag', TestTag);
+
 

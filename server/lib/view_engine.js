@@ -7,7 +7,7 @@
  */
 import path from 'path';
 import fs from 'fs';
-import getDomWindow from 'lib/get_dom_window';
+import getDomHtml from 'lib/get_dom_html';
 
 // These will appear as <script> tags
 let client_scripts = [
@@ -27,10 +27,8 @@ export default (file_path, opts, cb) => {
     if (err) {
       return cb(err);
     }
-    getDomWindow(html, src_scripts, client_scripts).then(window => {
-      window.addEventListener('WebComponentsReady', function(ev) {
-        cb(null, window.document.documentElement.outerHTML);
-      });
+    getDomHtml(html, src_scripts, client_scripts).then(html => {
+      cb(null, html);
     }).catch(cb);
   });
 };

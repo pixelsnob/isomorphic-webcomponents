@@ -18,21 +18,15 @@ module.exports = {
      filename: 'app.js'
   },
   plugins: [
-    /*new webpack.ProvidePlugin({
-      Backbone:       'backbone'
-    })*/
   ],
   resolve: {
     extensions: [ '', '.js' ],
     root: [
       path.join(app_dir, 'server'),
-      path.join(app_dir, 'shared'),
+      path.join(app_dir, 'public'),
       path.join(app_dir, 'node_modules')
     ],
     alias: {
-      template:                  'lib/template',
-      vex_dialog:                'vex-js/js/vex.dialog',
-      markdown:                  'marked'
     }
   },
   module: {
@@ -41,7 +35,7 @@ module.exports = {
         test: /\.js$/,
         loader: 'babel',
         query: {
-          presets: [ 'react', 'es2015', 'stage-0' ]
+          presets: [ 'es2015', 'stage-0' ]
         }
       },
       { 

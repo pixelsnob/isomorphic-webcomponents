@@ -11,7 +11,7 @@ export default (html = '', src_scripts = [], client_scripts = []) => {
     jsdom.env({
       html,
       src: src_scripts,
-      // Pass window's console() calls up to app
+      // Pass window's console() up 
       virtualConsole: jsdom.createVirtualConsole().sendTo(console),
       done: (err, window) => {
         if (err) {
@@ -25,7 +25,7 @@ export default (html = '', src_scripts = [], client_scripts = []) => {
           $script.src = script;
           $head.appendChild($script);
         });
-        resolve(window);
+        resolve(window.document.documentElement.outerHTML);
       }
     });
   });

@@ -22,7 +22,6 @@ module.exports = {
   resolve: {
     extensions: [ '', '.js' ],
     root: [
-      path.join(app_dir, 'shared'),
       path.join(app_dir, 'client'),
       path.join(app_dir, 'node_modules')
     ],
@@ -47,7 +46,10 @@ module.exports = {
     loaders: [
       { 
         test: /\.js$/,
-        loader: 'babel'
+        loader: 'babel',
+        query: {
+          presets: [ 'es2015', 'stage-0' ]
+        }
       },
       { 
         test: /\.json$/,
