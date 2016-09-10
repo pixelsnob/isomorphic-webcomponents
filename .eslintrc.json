@@ -1,0 +1,27 @@
+
+{
+  "extends": "eslint:all",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": false
+    }
+  },
+  "rules": {
+    "semi": 2,
+    "no-unused-vars": 1,
+    "no-console": 1,
+    "quotes": 0,
+    "spaced-comment": 1,
+    "padded-blocks": 0,
+    "indent": [ "error", 2 ],
+    "space-before-function-paren": [ "error", "never" ]
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  }
+}
+

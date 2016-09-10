@@ -29,7 +29,14 @@ module.exports = {
     alias: {
     }
   },
+  eslint: {
+    failOnWarning: false,
+    failOnError: true
+  },
   module: {
+    preLoaders: [
+      { test: /\.js$/, loader: 'eslint', exclude: /node_modules/ }
+    ],
     loaders: [
       { 
         test: /\.js$/,
