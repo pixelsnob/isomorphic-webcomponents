@@ -1,31 +1,37 @@
+/* eslint no-console: 0 */
 
 import { install } from 'source-map-support';
 install();
 
 import config from '../config';
-import path from 'path';
-import fs from 'fs';
+import { render } from './lib/server_dom';
 import express from 'express';
-import view_engine from './lib/view_engine';
+import pug from 'pug';
 
 const port = config.port || 3004,
-      app  = express(),
-      env  = process.env.NODE_ENV || 'development';
+  app = express(),
+  env = process.env.NODE_ENV || 'development',
+  base_url = 'https://staging.pixelsnob.com';
 
-app.engine('html', view_engine);
-app.set('view engine', 'html');
+app.engine('pug', pug.__express);
+app.set('view engine', 'pug');
 app.set('view cache', (env == 'production'));
 
 if (env == 'development') {
   app.use(express.static('public'));
 }
 
-app.route('/test').get((req, res, next) => {
-  res.render('test');
+app.get('/*', (req, res, next) => {
+  render(base_url + req.url, {}, (err, html) => {
+    if (err) {
+      return next(err);
+    }
+    res.send(html);
+  });
 });
 
 app.use((req, res, next) => {
-  res.status(404).send('404');//.render('not_found');
+  res.status(404).send('404');
 });
 
 app.use((err, req, res, next) => {
