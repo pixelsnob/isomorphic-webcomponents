@@ -47,4 +47,3 @@ export function render(url, opts, cb) {
   });
 }
 
-
