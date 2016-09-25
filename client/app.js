@@ -4,7 +4,6 @@ import MutationObserver from 'webcomponents.js/src/MutationObserver/MutationObse
 import custom_elements from '@webcomponents/custom-elements/src/custom-elements';
 
 import '@webcomponents/shadydom/src/env';
-//import '@webcomponents/shadydom/shadydom.min';
 
 import TestTag from './components/test_tag';
 import TestTag2 from './components/test_tag_2';
