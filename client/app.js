@@ -22,7 +22,6 @@ let render = (tag_name) => {
   // gross, temporary
   if (!body_el.querySelector(tag_name)) {
     body_el.innerHTML = `<${tag_name}/>`;
-    console.log('inner');
   }
   //body_el.appendChild(document.createElement(tag_name));
   //let shadow_root = body_el.attachShadow({ mode: 'open' });
