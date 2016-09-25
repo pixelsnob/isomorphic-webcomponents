@@ -1,9 +1,14 @@
 
+
 import MutationObserver from 'webcomponents.js/src/MutationObserver/MutationObserver';
 import custom_elements from '@webcomponents/custom-elements/src/custom-elements';
 
+import '@webcomponents/shadydom/src/env';
+//import '@webcomponents/shadydom/shadydom.min';
+
 import TestTag from './components/test_tag';
 import TestTag2 from './components/test_tag_2';
+
 import Router from 'navigo';
 
 let router = window.router = new Router,
@@ -15,8 +20,13 @@ window.customElements.define('test-tag-2', TestTag2);
 let render = (tag_name) => {
   let body_el = document.querySelector('body');
   // gross, temporary
-  body_el.innerHTML = '';
-  body_el.appendChild(document.createElement(tag_name));
+  if (!body_el.querySelector(tag_name)) {
+    body_el.innerHTML = `<${tag_name}/>`;
+    console.log('inner');
+  }
+  //body_el.appendChild(document.createElement(tag_name));
+  //let shadow_root = body_el.attachShadow({ mode: 'open' });
+  //shadow_root.appendChild(document.createElement(tag_name));
 };
 
 router.on('/test', () => {
