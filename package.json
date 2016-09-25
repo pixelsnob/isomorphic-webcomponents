@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@webcomponents/shadydom": "github:webcomponents/shadydom",
+    "@webcomponents/custom-elements": "github:webcomponents/custom-elements",
     "babel-core": "^6.13.2",
     "babel-loader": "^6.2.5",
     "babel-plugin-transform-remove-strict-mode": "0.0.2",

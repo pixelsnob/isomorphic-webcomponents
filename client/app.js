@@ -17,14 +17,17 @@ window.customElements.define('test-tag', TestTag);
 window.customElements.define('test-tag-2', TestTag2);
 
 let render = (tag_name) => {
-  let body_el = document.querySelector('body');
+  let body = document.querySelector('body');
   // gross, temporary
-  if (!body_el.querySelector(tag_name)) {
-    body_el.innerHTML = `<${tag_name}/>`;
+  /*if (!body.querySelector(tag_name)) {
+    body.innerHTML = '';
+    body.appendChild(document.createElement(tag_name));
+  }*/
+  if (!body.querySelector(tag_name)) {
+    body.innerHTML = '';
+    let shadow_root = body.attachShadow({ mode: 'open' });
+    shadow_root.appendChild(document.createElement(tag_name));
   }
-  //body_el.appendChild(document.createElement(tag_name));
-  //let shadow_root = body_el.attachShadow({ mode: 'open' });
-  //shadow_root.appendChild(document.createElement(tag_name));
 };
 
 router.on('/test', () => {
