@@ -1,7 +1,7 @@
 
 
-import MutationObserver from 'webcomponents.js/src/MutationObserver/MutationObserver';
-import custom_elements from '@webcomponents/custom-elements/src/custom-elements';
+import 'webcomponents.js/src/MutationObserver/MutationObserver';
+import '@webcomponents/custom-elements/src/custom-elements';
 
 import '@webcomponents/shadydom/src/env';
 
@@ -18,11 +18,6 @@ window.customElements.define('test-tag-2', TestTag2);
 
 let render = (tag_name) => {
   let body = document.querySelector('body');
-  // gross, temporary
-  /*if (!body.querySelector(tag_name)) {
-    body.innerHTML = '';
-    body.appendChild(document.createElement(tag_name));
-  }*/
   if (!body.querySelector(tag_name)) {
     body.innerHTML = '';
     let shadow_root = body.attachShadow({ mode: 'open' });
@@ -34,7 +29,6 @@ router.on('/test', () => {
   render('test-tag');
 }).on('/test2', () => {
   render('test-tag-2');
-  console.log('this is /test2!');
 });
 
 window.addEventListener('load', () => {

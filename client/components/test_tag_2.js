@@ -2,28 +2,28 @@
 export default class extends HTMLElement {
   
   constructor() {
-    console.log('ctor');
     super();
-    let shadow_root = this.attachShadow({ mode: 'open' });
-    shadow_root.innerHTML = `
-      <p>yo this works</p>  
-      <p><a href="/test">test</a></p>
+    this.shadow_root = this.attachShadow({ mode: 'open' });
+    this.shadow_root.innerHTML = `
+      <p>hi from 2</p>  
+      <p><a href="/test">go to test</a></p>
     `;
-    shadow_root.querySelector('a').addEventListener('click',
-      this.linkOnclick.bind(this)); 
+    console.log('ctor 2');
   }
   
   linkOnclick(evt) {
     evt.preventDefault();
-    window.dispatchEvent(new CustomEvent('navigate', { detail: { url: '/test' }}));
+    this.dispatchEvent(new CustomEvent('navigate', { detail: { url: '/test' }, bubbles: true }));
   }
 
   connectedCallback() {
-    console.log('connectedCallback');
+    this.shadow_root.querySelector('a').addEventListener('click',
+      this.linkOnclick.bind(this)); 
+    console.log('connectedCallback 2');
   }
 
   disconnectedCallback() {
-    console.log('disconnectedCallback');
+    console.log('disconnectedCallback 2');
   }
 }
 
