@@ -13,7 +13,7 @@ export default class extends HTMLElement {
   
   linkOnclick(evt) {
     evt.preventDefault();
-    this.dispatchEvent(new CustomEvent('navigate', { detail: { url: '/test2' }, bubbles: true }));
+    window.dispatchEvent(new CustomEvent('navigate', { detail: { url: '/test2' }}));
   }
 
   connectedCallback() {
