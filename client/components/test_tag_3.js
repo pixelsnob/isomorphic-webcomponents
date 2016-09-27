@@ -1,4 +1,6 @@
 
+let i = 0;
+
 export default class extends HTMLElement {
   
   static get observedAttributes() {
@@ -11,7 +13,6 @@ export default class extends HTMLElement {
     this.shadow_root.innerHTML = `
       <p>this is (nested) tag 3: <span class="value"></span></p>  
     `;
-    //console.trace('ctor 3');
   }
   
   adoptedCallback() {
@@ -27,13 +28,13 @@ export default class extends HTMLElement {
   }
 
   attributeChangedCallback(name, old_val, new_val) {
-    //console.log('attributeChangedCallback()', arguments);
     if (name == 'test') {
       let val_span = this.shadow_root.querySelector('p .value');
       if (val_span) {
         val_span.innerHTML = new_val;
       }
     }
+    //console.log('attributeChangedCallback()', arguments);
   }
 
 }
