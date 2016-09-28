@@ -4,8 +4,8 @@ import '@webcomponents/custom-elements/src/custom-elements';
 
 import '@webcomponents/shadydom/src/env';
 
-import TestTag from './components/test_tag';
-import TestTag2 from './components/test_tag_2';
+import TestTag from './custom-elements/test-tag';
+import TestTag2 from './custom-elements/test-tag-2';
 
 import Router from 'navigo';
 
