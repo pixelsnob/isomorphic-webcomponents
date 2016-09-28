@@ -10,12 +10,11 @@ export default class extends HTMLElement {
   
   constructor() {
     super();
-    let shadow_root = render(this, ` 
+    let [ shadow_root, iso_root ] = render(this, ` 
       <p>hi from 2</p>  
       <p><a href="/test">go to test</a></p>
       <ul></ul>
     `);
-
     if (shadow_root) {
       let ul = shadow_root.querySelector('ul');
       for (let i = 0; i <= 5; i++) {
@@ -25,10 +24,8 @@ export default class extends HTMLElement {
         li.appendChild(tt3);
         ul.appendChild(li);
       }
-      this.attachHandlers(shadow_root);
-    } else {
-      this.attachHandlers(this);
     }
+    this.attachHandlers(iso_root);
   }
     
   attachHandlers(root_node) {

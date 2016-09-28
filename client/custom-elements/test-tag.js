@@ -5,15 +5,11 @@ export default class extends HTMLElement {
   
   constructor() {
     super();
-    let shadow_root = render(this, `
+    let [ shadow_root, iso_root ] = render(this, `
       <p>hi from test-tag</p>  
       <p><a href="/test2">go to test 2</a></p>
     `);
-    if (shadow_root) {
-      this.attachHandlers(shadow_root);
-    } else {
-      this.attachHandlers(this);
-    }
+    this.attachHandlers(iso_root);
     //console.log('ctor 1');
   }
   
