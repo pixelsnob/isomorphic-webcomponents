@@ -1,29 +1,31 @@
 
+import render from './render-iso';
+
 export default class extends HTMLElement {
   
   constructor() {
     super();
-    this.shadow_root = this.attachShadow({ mode: 'open' });
-    this.shadow_root.innerHTML = `
+    let shadow_root = render(this, `
       <p>hi from test-tag</p>  
       <p><a href="/test2">go to test 2</a></p>
-    `;
-    console.log('ctor 1');
+    `);
+    if (shadow_root) {
+      this.attachHandlers(shadow_root);
+    } else {
+      this.attachHandlers(this);
+    }
+    //console.log('ctor 1');
   }
   
-  linkOnclick(evt) {
-    evt.preventDefault();
-    window.dispatchEvent(new CustomEvent('navigate', { detail: { url: '/test2' }}));
-  }
-
-  connectedCallback() {
-    this.shadow_root.querySelector('a').addEventListener('click',
-      this.linkOnclick.bind(this)); 
-    console.log('connectedCallback 1');
+  attachHandlers(root_node) {
+    root_node.querySelector('a').addEventListener('click', (evt) => {
+      evt.preventDefault();
+      window.dispatchEvent(new CustomEvent('navigate', { detail: { url: '/test2' }}));
+    });
   }
 
   disconnectedCallback() {
-    console.log('disconnectedCallback 1');
+    //console.log('disconnectedCallback 1');
   }
 }
 
