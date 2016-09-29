@@ -9,7 +9,7 @@ export default class extends HTMLElement {
    
   constructor() {
     super();
-    [ , this.iso_root ] = render(this, `
+    render(this, `
       <p>this is (nested) tag 3: <span class="value"></span></p>  
     `);
   }

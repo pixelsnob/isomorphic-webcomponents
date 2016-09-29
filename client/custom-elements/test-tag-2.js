@@ -10,13 +10,13 @@ export default class extends HTMLElement {
   
   constructor() {
     super();
-    let [ shadow_root, iso_root ] = render(this, ` 
+    render(this, ` 
       <p>hi from 2</p>  
       <p><a href="/test">go to test</a></p>
       <ul></ul>
     `);
-    if (shadow_root) {
-      let ul = shadow_root.querySelector('ul');
+    if (this.shadowRoot) {
+      let ul = this.shadowRoot.querySelector('ul');
       for (let i = 0; i <= 5; i++) {
         let li = document.createElement('li'),
           tt3 = document.createElement('test-tag-3');
@@ -25,11 +25,11 @@ export default class extends HTMLElement {
         ul.appendChild(li);
       }
     }
-    this.attachHandlers(iso_root);
+    this.attachHandlers();
   }
     
   attachHandlers(root_node) {
-    root_node.querySelector('a').addEventListener('click', (evt) => {
+    this.iso_root.querySelector('a').addEventListener('click', (evt) => {
       window.dispatchEvent(new CustomEvent('navigate', { detail: { url: '/test' }}));
       evt.preventDefault();
     });
