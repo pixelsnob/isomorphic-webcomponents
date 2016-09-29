@@ -29,7 +29,7 @@ export default class extends HTMLElement {
   }
     
   attachHandlers(root_node) {
-    this.iso_root.querySelector('a').addEventListener('click', (evt) => {
+    this.iso.querySelector('a').addEventListener('click', (evt) => {
       window.dispatchEvent(new CustomEvent('navigate', { detail: { url: '/test' }}));
       evt.preventDefault();
     });

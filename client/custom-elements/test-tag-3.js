@@ -16,7 +16,7 @@ export default class extends HTMLElement {
   
   attributeChangedCallback(name, old_val, new_val) {
     if (name == 'test') {
-      let val_span = this.iso_root.querySelector('.value');
+      let val_span = this.iso.querySelector('.value');
       if (val_span) {
         val_span.innerHTML = new_val;
       }
