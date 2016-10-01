@@ -19,8 +19,14 @@ let render = (tag_name) => {
   let body = document.querySelector('body');
   if (!body.querySelector(tag_name)) {
     body.innerHTML = '';
-    let shadow_root = body.attachShadow({ mode: 'open' });
-    shadow_root.appendChild(document.createElement(tag_name));
+    let shadow_root = body.attachShadow({ mode: 'open' }),
+      el = document.createElement(tag_name),
+      sidebar = document.createElement('div');
+    sidebar.setAttribute('slot', 'sidebar');
+    sidebar.innerHTML = 'sidebar!';
+    el.appendChild(sidebar);
+    shadow_root.appendChild(el);
+    el.shadowRoot.render();
   }
 };
 
@@ -37,4 +43,5 @@ window.addEventListener('load', () => {
 window.addEventListener('navigate', (evt) => {
   router.navigate(evt.detail.url);
 });
+
 
