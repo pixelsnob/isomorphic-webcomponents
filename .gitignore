@@ -9,6 +9,7 @@ config.js
 *.grunt
 
 tmp
+.tmp
 logs
 var
 
