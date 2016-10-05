@@ -12,19 +12,22 @@ let client_scripts = [
 let src_scripts = client_scripts.map(script_path =>
   fs.readFileSync(path.resolve('public', script_path), 'utf8'));
 
-export function render(url, opts, cb) {
+// Calls cb() with a window object or error
+export function getWindow(url, opts, cb) {
   jsdom.env({
     html: '',
     src: src_scripts,
     virtualConsole: jsdom.createVirtualConsole().sendTo(console),
-    created: (err, window) => {
+    created: function(err, window) {
       if (err) {
         return cb(err);
       }
       window.is_server = true;
-      jsdom.changeURL(window, url);
+      if (url) {
+        jsdom.changeURL(window, url);
+      }
     },
-    done: (err, window) => {
+    done: function(err, window) {
       if (err) {
         return cb(err);
       }
@@ -42,8 +45,16 @@ export function render(url, opts, cb) {
         script_el.innerHTML = 'window.data = ' + JSON.stringify(opts.data) + ';';
         head_el.appendChild(script_el);
       }
-      cb(null, window.document.documentElement.outerHTML);
+      cb(null, window);
     }
   });
 }
 
+export function render(url, opts, cb) {
+  getWindow(url, opts, function(err, window) {
+    if (err) {
+      return cb(err);
+    }
+    cb(null, window.document.documentElement.outerHTML);
+  });
+}

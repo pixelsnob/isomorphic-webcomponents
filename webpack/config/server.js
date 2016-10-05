@@ -1,9 +1,9 @@
 
 'use strict';
 
-const webpack           = require('webpack'),
-      path              = require('path'),
-      nodeExternals     = require('webpack-node-externals');
+const webpack = require('webpack'),
+  path = require('path'),
+  nodeExternals = require('webpack-node-externals');
 
 const app_dir = path.join(__dirname, '../../');
 
@@ -12,7 +12,7 @@ module.exports = {
   externals: [ nodeExternals() ],
   target: 'node',
   entry: './server/app.js',
-  devtool: 'source-map',
+  devtool: 'cheap-module-source-map',
   output: {
      path: path.join(app_dir, 'server/dist'),
      filename: 'app.js'
