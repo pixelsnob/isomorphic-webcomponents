@@ -16,17 +16,11 @@ window.customElements.define('test-tag', TestTag);
 window.customElements.define('test-tag-2', TestTag2);
 
 let render = (tag_name) => {
-  let body = document.querySelector('body');
+  let body = document.body;
   if (!body.querySelector(tag_name)) {
     body.innerHTML = '';
-    let shadow_root = body.attachShadow({ mode: 'open' }),
-      el = document.createElement(tag_name),
-      sidebar = document.createElement('div');
-    sidebar.setAttribute('slot', 'sidebar');
-    sidebar.innerHTML = 'sidebar!';
-    el.appendChild(sidebar);
-    shadow_root.appendChild(el);
-    el.shadowRoot.render();
+    let tt = document.createElement(tag_name);
+    body.appendChild(tt);
   }
 };
 

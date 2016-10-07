@@ -13,7 +13,7 @@ let src_scripts = client_scripts.map(script_path =>
   fs.readFileSync(path.resolve('public', script_path), 'utf8'));
 
 // Calls cb() with a window object or error
-export function getWindow(url, opts, cb) {
+export function getWindow(url, cb) {
   jsdom.env({
     html: '',
     src: src_scripts,
@@ -23,7 +23,7 @@ export function getWindow(url, opts, cb) {
         return cb(err);
       }
       window.is_server = true;
-      if (url) {
+      if (url !== null) {
         jsdom.changeURL(window, url);
       }
     },
@@ -39,22 +39,9 @@ export function getWindow(url, opts, cb) {
         script_el.src = script;
         head_el.appendChild(script_el);
       });
-      if (opts && opts.data) {
-        window.data = opts.data;
-        let script_el = document.createElement('script');
-        script_el.innerHTML = 'window.data = ' + JSON.stringify(opts.data) + ';';
-        head_el.appendChild(script_el);
-      }
       cb(null, window);
     }
   });
 }
 
-export function render(url, opts, cb) {
-  getWindow(url, opts, function(err, window) {
-    if (err) {
-      return cb(err);
-    }
-    cb(null, window.document.documentElement.outerHTML);
-  });
-}
+

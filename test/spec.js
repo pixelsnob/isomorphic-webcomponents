@@ -12,7 +12,7 @@ let window, document;
 describe('window object', function() {
 
   before(function(done) {
-    server_dom.getWindow('', {}, function(err, win) {
+    server_dom.getWindow(null, function(err, win) {
       if (err) {
         done(err);
         return;
@@ -47,16 +47,21 @@ describe('window object', function() {
   it('should have custom events capabilities', function() {
     expect(window.CustomEvent).to.be.a('function');
   });
-
-  it('should render custom element contents', function() {
+  
+  it('should render custom element contents using shadow dom and slots', function() {
     let body = document.body,
-      tt = document.createElement('test-tag'); 
-    body.appendChild(tt);
-    tt.shadowRoot.render();
-
+      slot = document.createElement('slot');
+    slot.setAttribute('name', 'test');
+    body.attachShadow({ mode: 'open' });
+    body.shadowRoot.appendChild(slot);
+    let tt = document.createElement('test-tag-2');
+    let tt_container = document.createElement('div');
+    tt_container.setAttribute('slot', 'test');
+    tt_container.appendChild(tt);
+    body.appendChild(document.importNode(tt_container, true));
     expect(tt).to.be.an('object');
-    expect(body.innerHTML).to.not.be.empty();
-    expect(body.querySelector('a[href="/test2"]')).to.not.be.empty();
+    expect(body.innerHTML).to.be.ok();
+    expect(body.querySelector('a[href="/test"]')).to.be.ok();
   });
 
 });

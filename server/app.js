@@ -4,7 +4,7 @@ import { install } from 'source-map-support';
 install();
 
 import config from '../config';
-import { render } from './lib/server_dom';
+import { getWindow } from './lib/server_dom';
 import express from 'express';
 import pug from 'pug';
 
@@ -22,11 +22,11 @@ if (env == 'development') {
 }
 
 app.get('/*', (req, res, next) => {
-  render(base_url + req.url, {}, (err, html) => {
+  getWindow(base_url + req.url, (err, window) => {
     if (err) {
       return next(err);
     }
-    res.send(html);
+    res.send(window.document.documentElement.outerHTML);
   });
 });
 

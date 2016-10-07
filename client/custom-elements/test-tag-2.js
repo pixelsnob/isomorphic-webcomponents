@@ -21,7 +21,10 @@ export default class extends HTMLElement {
     if (!ul.childNodes.length) {
       for (let i = 0; i <= 5; i++) {
         let li = document.createElement('li');
-        li.innerHTML = `<test-tag-3 test="${i}"></test-tag-3>`;
+        let tt3 = document.createElement('test-tag-3');
+        tt3.setAttribute('test', i);
+        tt3.shadowRoot.render();
+        li.appendChild(tt3);
         ul.appendChild(li);
       }
     }
@@ -30,7 +33,7 @@ export default class extends HTMLElement {
       evt.preventDefault();
     });
   }
-    
+   
 }
 
 
