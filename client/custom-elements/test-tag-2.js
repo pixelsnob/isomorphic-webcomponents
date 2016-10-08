@@ -23,7 +23,7 @@ export default class extends HTMLElement {
         let li = document.createElement('li');
         let tt3 = document.createElement('test-tag-3');
         tt3.setAttribute('test', i);
-        tt3.shadowRoot.render();
+        //tt3.shadowRoot.render();
         li.appendChild(tt3);
         ul.appendChild(li);
       }
@@ -32,6 +32,10 @@ export default class extends HTMLElement {
       window.dispatchEvent(new CustomEvent('navigate', { detail: { url: '/test' }}));
       evt.preventDefault();
     });
+  }
+
+  connectedCallback() {
+    console.log('connected 2');
   }
    
 }

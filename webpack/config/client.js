@@ -1,18 +1,16 @@
 
 'use strict';
 
-var webpack           = require('webpack'),
-    path              = require('path'),
-    ExtractTextPlugin = require('extract-text-webpack-plugin');
-
-var app_dir = path.resolve(__dirname, '../../');
+const webpack = require('webpack'),
+  path = require('path'),
+  ExtractTextPlugin = require('extract-text-webpack-plugin'),
+  app_dir = path.resolve(__dirname, '../../');
 
 module.exports = {
   context: app_dir,
   entry: { 
-    client: [
-      './client/app'
-    ]
+    client: [ './client/polyfills', './client/app' ],
+    test: [ './client/polyfills', './client/test' ]
   },
   output: {
      path: path.join(app_dir, 'public/dist'),

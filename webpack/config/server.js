@@ -3,9 +3,8 @@
 
 const webpack = require('webpack'),
   path = require('path'),
-  nodeExternals = require('webpack-node-externals');
-
-const app_dir = path.join(__dirname, '../../');
+  nodeExternals = require('webpack-node-externals'),
+  app_dir = path.join(__dirname, '../../');
 
 module.exports = {
   context: app_dir,

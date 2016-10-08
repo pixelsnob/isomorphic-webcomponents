@@ -21,10 +21,11 @@ export default class extends HTMLElement {
       let navigate_event = new CustomEvent('navigate', { detail: { url: '/test2' }});
       window.dispatchEvent(navigate_event);
     });
+    console.log('connectedCallback 1');
   }
   
   disconnectedCallback() {
-    //console.log('disconnectedCallback 1');
+    console.log('disconnectedCallback 1');
   }
 }
 

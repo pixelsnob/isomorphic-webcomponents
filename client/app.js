@@ -1,9 +1,4 @@
 
-import 'webcomponents.js/src/MutationObserver/MutationObserver';
-import '@webcomponents/custom-elements/src/custom-elements';
-
-import '@webcomponents/shadydom/src/env';
-
 import TestTag from './custom-elements/test-tag';
 import TestTag2 from './custom-elements/test-tag-2';
 
@@ -19,10 +14,19 @@ let render = (tag_name) => {
   let body = document.body;
   if (!body.querySelector(tag_name)) {
     body.innerHTML = '';
+    let slot = document.createElement('slot');
+    slot.setAttribute('name', 'test');
+    body.attachShadow({ mode: 'open' });
+    body.shadowRoot.appendChild(slot);
     let tt = document.createElement(tag_name);
-    body.appendChild(tt);
+    let tt_container = document.createElement('div');
+    tt_container.setAttribute('slot', 'test');
+    tt_container.appendChild(tt);
+    body.appendChild(tt_container);
+    body.shadowRoot.render();
   }
 };
+
 
 router.on('/test', () => {
   render('test-tag');
@@ -37,5 +41,4 @@ window.addEventListener('load', () => {
 window.addEventListener('navigate', (evt) => {
   router.navigate(evt.detail.url);
 });
-
 
