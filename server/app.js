@@ -22,7 +22,8 @@ if (env == 'development') {
 }
 
 app.get('/*', (req, res, next) => {
-  getWindow(base_url + req.url, (err, window) => {
+  let url = base_url + req.url;
+  getWindow(url, [ 'dist/client.js' ], (err, window) => {
     if (err) {
       return next(err);
     }

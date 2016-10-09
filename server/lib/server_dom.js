@@ -3,22 +3,18 @@ import jsdom from 'jsdom';
 import path from 'path';
 import fs from 'fs';
 
-// These will appear as <script> tags
-let client_scripts = [
-  'dist/client.js'
-];
-
-// Provide compiled client script to jsdom
-let src_scripts = client_scripts.map(script_path =>
-  fs.readFileSync(path.resolve('public', script_path), 'utf8'));
+let getSrcFromScript = script_path =>
+  fs.readFileSync(path.resolve('public', script_path), 'utf8');
 
 // Calls cb() with a window object or error
-export function getWindow(url, cb) {
+export function getWindow(url, script_paths = [], cb) {
   jsdom.env({
     html: '',
-    src: src_scripts,
+    // Adds compiled JS source into jsdom environment
+    // The same script(s) will be attached as script tags below, for the client
+    src: script_paths.map(getSrcFromScript),
     virtualConsole: jsdom.createVirtualConsole().sendTo(console),
-    created: function(err, window) {
+    created: (err, window) => {
       if (err) {
         return cb(err);
       }
@@ -27,14 +23,14 @@ export function getWindow(url, cb) {
         jsdom.changeURL(window, url);
       }
     },
-    done: function(err, window) {
+    done: (err, window) => {
       if (err) {
         return cb(err);
       }
       let { document } = window;
-      // Attach client scripts
+      // Attach client scripts to rendered html
       let head_el = document.querySelector('head');
-      client_scripts.map(script => {
+      script_paths.map(script => {
         let script_el = document.createElement('script');
         script_el.src = script;
         head_el.appendChild(script_el);

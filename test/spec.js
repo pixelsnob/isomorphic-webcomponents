@@ -12,7 +12,7 @@ let window, document;
 describe('window object', function() {
 
   before(function(done) {
-    server_dom.getWindow(null, function(err, win) {
+    server_dom.getWindow(null, [ 'dist/test.js' ], function(err, win) {
       if (err) {
         done(err);
         return;
