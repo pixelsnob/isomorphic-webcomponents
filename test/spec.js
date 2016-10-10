@@ -9,7 +9,7 @@ const assert = require('assert'),
 
 let window, document;
 
-describe('window object', function() {
+describe('Server-side DOM', function() {
 
   before(function(done) {
     server_dom.getWindow(null, [ 'dist/test.js' ], function(err, win) {
